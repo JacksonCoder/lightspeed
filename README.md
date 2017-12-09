@@ -1,5 +1,4 @@
-# LightSpeed
-## The C/C++ package manager
+# LightSpeed- The C/C++ package manager
 
 ## Features
 - Complete package manager for C++ applications
@@ -10,12 +9,19 @@
 
 ## Commands
 ```lightspeed install <package>```: Installs the specified package
+
 ```lightspeed version```: Prints the version
+
 ```lightspeed search <package name>```: Searches for a package with a certain name
+
 ```lightspeed load <file>``` Loads a LightSpeed configuration file for the manager
+
 ```lightspeed build```: Build a CMake file that uses the locally required packages
+
 ```lightspeed remove <package>```: Uninstalls the package
+
 ```lightspeed repo <add/remove/exists> <repository name>```: Commands to add, remove and check potential code repositories
+
 ## LightSpeed file formatting
 LightSpeed uses a JSON file format for specifying package requirements and settings for a project. The default file that LightSpeed looks for is ```LightSpeed.json```.
 
