@@ -3,6 +3,7 @@
 #ifndef ENVIROMENT
 #define ENVIROMENT
 #include <string>
+#include <tuple>
 #include "inputhandling.h"
 #include "fileloader.h"
 #include "configparser.h"
@@ -11,6 +12,16 @@ using namespace std;
 class EState {
     string conf_access;
     string error_status = "No error occured";
+    
+    
+    // state variables
+    
+    string s_LSPATH;
+    bool s_LATEST;
+    string s_PROJECTNAME;
+    bool s_integrity = true;
+    string s_error;
+    
     public:
         EState(InputHandleOutput i) {
             const string DEFAULT_ACCESS = ".lsconf.json";
@@ -22,17 +33,21 @@ class EState {
                 conf_access = DEFAULT_ACCESS;
             }
         }
-        bool is_stable() {
+        bool setup() {
             //Test config file exists
             File* file = FileLoader::load(conf_access,true);
             if (!file->open()) {
                 error_status = "Could not access local configuration file: '" + conf_access + "'. Please check that the file exists or you are in the proper directory";
                 return false;
             }
-                ConfigParser c = ConfigParser(file);
+            ConfigParser c = ConfigParser(file);
             if(!c.success()) {
-              error_status = c.error_msg();
-              return false;
+                s_error = c.error_msg();
+                s_integrity = false;
+            } else {
+                s_LSPATH = c.getlspath();
+                s_LATEST = c.getlatest();
+                s_PROJECTNAME = c.getprojectname();
             }
             return true;
         }
@@ -40,6 +55,14 @@ class EState {
             std::cerr<<"An error occured while running LightSpeed:"<<std::endl;
             std::cerr<<error_status<<std::endl;
             exit(1);
+        }
+        
+        std::tuple<std::string,std::string,bool> get_state() {
+            if (!s_integrity) {
+                error_status = s_error;
+                fail();
+            }
+            return std::make_tuple(s_PROJECTNAME, s_LSPATH,s_LATEST);
         }
 };
 

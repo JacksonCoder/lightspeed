@@ -22,6 +22,9 @@ public:
     void append_contents(std::string s) {
         contents += s;
     }
+    std::string getContents() {
+        return contents;
+    }
 };
 
 #endif
