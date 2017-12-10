@@ -4,13 +4,17 @@
 - Complete package manager for C++ applications
 - Install binaries or compile from source
 - Intuitive command line interface that's easy to learn but powerful for professionals
-- Install both local and global packages
+- Install packages from central and decentralized repostories
 - Compile CMake files for dependencies
 
 ## Commands
 ```lightspeed install <package>```: Installs the specified package
 
 ```lightspeed version```: Prints the version
+
+```lightspeed status```: Prints the current status of the project
+
+```lightspeed create <project name>```: Creates a new project in the specified directory
 
 ```lightspeed search <package name>```: Searches for a package with a certain name
 
