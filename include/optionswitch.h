@@ -20,6 +20,7 @@ class OptionSwitch {
     void run_switch () {
         if ( option == "help" || option == "version") {
             help();
+            return;
         }
         if (option == "status") {
             std::cout << "Checking state of current project..." << std::endl;
@@ -54,7 +55,7 @@ class OptionSwitch {
             std::cout<< "Not implemented yet" << std::endl;
             return;
         }
-        env->fail_with_external("The command " + option + " is not recognized as a valid command. Type 'lightspeed help' for help with commands");
+        env->stability_check(); // Fails because of invalid command
         
     }
     

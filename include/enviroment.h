@@ -7,6 +7,7 @@
 #include "inputhandling.h"
 #include "fileloader.h"
 #include "configparser.h"
+#include "globals.h"
 
 using namespace std;
 class EState {
@@ -59,6 +60,16 @@ class EState {
                 s_LSPATH = c.getlspath();
                 s_LATEST = c.getlatest();
                 s_PROJECTNAME = c.getprojectname();
+            }
+            
+            // Test arguments
+            bool option_valid = false;
+            for( auto c : CMD_OPTIONS) {
+                if ( option == c) option_valid = true;
+            }
+            if (!option_valid) {
+                s_integrity = false; //TODO: Make arg_integrity
+                error_status = "The command " + option + " is not recognized as a valid command. Type 'lightspeed help' for help with commands"; //TODO: Create arg_error variable group
             }
             return true;
         }
