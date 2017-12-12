@@ -1,7 +1,7 @@
 // enviroment.h
 
-#ifndef ENVIROMENT
-#define ENVIROMENT
+#ifndef ENVIROMENT_H
+#define ENVIROMENT_H
 #include <string>
 #include <tuple>
 #include "inputhandling.h"
@@ -22,6 +22,8 @@ class EState {
     bool s_integrity = true;
     string s_error;
     
+    string option;
+    
     public:
         EState(InputHandleOutput i) {
             const string DEFAULT_ACCESS = ".lsconf.json";
@@ -32,6 +34,15 @@ class EState {
             else {
                 conf_access = DEFAULT_ACCESS;
             }
+            const string DEFAULT_ACTION = "help";
+            // Check if option was specified
+            if (i.get_option() != "") {
+                option = i.get_option();
+            }
+            else {
+                option = DEFAULT_ACTION;
+            }
+            cout<< option << endl;
         }
         bool setup() {
             //Test config file exists
@@ -57,12 +68,24 @@ class EState {
             exit(1);
         }
         
-        std::tuple<std::string,std::string,bool> get_state() {
-            if (!s_integrity) {
-                error_status = s_error;
+        void fail_with_external(std::string error) {
+            error_status = error;
+            fail();
+        }
+        
+        void stability_check() {
+            if(s_error != "") error_status = s_error;
+            if(!s_integrity) {
                 fail();
             }
+        }
+        
+        std::tuple<std::string,std::string,bool> get_state() {
             return std::make_tuple(s_PROJECTNAME, s_LSPATH,s_LATEST);
+        }
+        
+        std::string get_option() {
+            return option;
         }
 };
 
