@@ -66,4 +66,54 @@ public:
     
 };
 
+class ProjectFileParser {
+    std::string error_msg;
+    std::string name,version,owner;
+    json object;
+    bool has_success = false;
+    std::vector<json> dependencies;
+    std::string custom_install_directory;
+public:
+    ProjectFileParser(File* f) {
+        std::string contents = f->getContents();
+        try {
+            object = json::parse(contents);
+        }
+        catch(...) {
+            error_msg = "An exception was thrown during parsing of the JSON data";
+            return;
+        }
+        try {
+            std::exception e;
+            if(!(object["name"].is_string())) throw e;
+            if(!(object["version"].is_string())) throw e;
+            if(!(object["owner"].is_string())) throw e;
+        }
+        catch (std::exception& e) {
+            std::cout<<"B";
+            error_msg = "There was an error parsing your package definition file. Check the file for typos";
+            return;
+        }
+        name = object["name"];
+        version = object["version"];
+        owner = object["owner"];
+        json deproot = object["dependencies"];
+        if (!deproot.is_array()) {
+            error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
+            return;
+        }
+        for (auto package : deproot) {
+            dependencies.push_back(package);
+        }
+    }
+    
+    std::string get_error() {
+        return error_msg;
+    }
+    
+};
+
+class LSFileParser {
+};
+
 #endif

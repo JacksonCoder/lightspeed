@@ -1,9 +1,9 @@
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#ifndef GLOBAL_H_LS
+#define GLOBAL_H_LS
 #include <string>
 #include <vector>
 
-const std::string LS_VERSION = "0.1";
+extern const std::string LS_VERSION;
 extern std::vector<std::string> CMD_OPTIONS;
 
 

@@ -12,3 +12,5 @@ std::vector<std::string> CMD_OPTIONS  = {
     "repo",
     "status"
 };
+
+const std::string LS_VERSION = "0.1";

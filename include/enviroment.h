@@ -43,7 +43,6 @@ class EState {
             else {
                 option = DEFAULT_ACTION;
             }
-            cout<< option << endl;
         }
         bool setup() {
             //Test config file exists

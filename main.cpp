@@ -14,11 +14,13 @@ int main (int argc,char** argv) {
     if(!estate->setup()) {
         estate->fail();
     }
+    ProjectFileParser* p = new ProjectFileParser(FileLoader::load("LightSpeed.json",true));
     //Send to switch
     OptionSwitch* o = new OptionSwitch(estate);
     o->run_switch(); // Main entry point for package manager
     //estate.clean();
     delete estate;
     delete inputhandler;
+    delete p;
     return 0;
 }
