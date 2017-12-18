@@ -55,3 +55,8 @@ By running:
 and then
 ```lightspeed build```
 a ```LightSpeed.cmake``` file will be generated, and a ```cmakebuild``` directory will be created with the SFML library installed.
+
+## More information
+
+Documentation is coming soon regarding the creation of LightSpeed packages.
+
