@@ -1,0 +1,3 @@
+language: cpp
+install: true #Dependency script to be added
+build: cmake CMakeLists.txt && build/make
