@@ -1,3 +1,5 @@
 language: cpp
-install: true #Dependency script to be added
+before_install:
+        - chmod +x ./.install_deps.sh
+install: ./.install_deps.sh
 script: cmake CMakeLists.txt && make
