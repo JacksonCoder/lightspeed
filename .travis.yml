@@ -1,4 +1,4 @@
-language: cpp
+language: generic
 before_install:
         - chmod +x ./.install_deps.sh
 install: ./.install_deps.sh
