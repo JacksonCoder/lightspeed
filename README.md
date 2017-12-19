@@ -1,5 +1,7 @@
 # LightSpeed- The C/C++ package manager
 [![Build Status](https://travis-ci.org/JacksonCoder/lightspeed.svg?branch=master)](https://travis-ci.org/JacksonCoder/lightspeed)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/JacksonCoder/lightspeed.svg?columns=To%20Do,In%20Progress,Done,Later%20Version)](https://waffle.io/JacksonCoder/lightspeed)
+
 ## Features
 - Complete package manager for C++ applications
 - Install binaries or compile from source
