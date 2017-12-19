@@ -1,0 +1,16 @@
+language: generic
+before_install:
+        - chmod +x ./.install_deps.sh
+install: ./.install_deps.sh
+script: cmake CMakeLists.txt && make
+matrix:
+  include:
+    - os: linux
+      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
+      addons:
+        apt:
+          packages:
+            - g++-5
+          sources: &sources
+            - llvm-toolchain-precise-3.8
+            - ubuntu-toolchain-r-test

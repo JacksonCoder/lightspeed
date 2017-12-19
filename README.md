@@ -1,5 +1,5 @@
 # LightSpeed- The C/C++ package manager
-
+[![Build Status](https://travis-ci.org/JacksonCoder/lightspeed.svg?branch=master)](https://travis-ci.org/JacksonCoder/lightspeed)
 ## Features
 - Complete package manager for C++ applications
 - Install binaries or compile from source
