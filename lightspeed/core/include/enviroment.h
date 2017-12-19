@@ -7,7 +7,7 @@
 #include "inputhandling.h"
 #include "fileloader.h"
 #include "configparser.h"
-#include "globals.h"
+#include "../globals.h"
 
 using namespace std;
 class EState {
