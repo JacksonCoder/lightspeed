@@ -10,21 +10,11 @@ class File {
     std::string contents;
     
 public:
-    File(std::string fname) {
-        filename = fname;
-    }
-    bool open() {
-        return is_open;
-    }
-    void set_open(bool v) {
-        is_open = v;
-    }
-    void append_contents(std::string s) {
-        contents += s;
-    }
-    std::string getContents() {
-        return contents;
-    }
+    File(std::string fname);
+    bool open();
+    void set_open(bool);
+    void append_contents(std::string);
+    std::string getContents();
 };
 
 #endif
