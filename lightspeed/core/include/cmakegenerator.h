@@ -1,3 +1,6 @@
+#ifndef CMAKEGENERATOR_LS
+#define CMAKEGENERATOR_LS
+
 // CMakeGenerator
 #include "../external/json.hpp"
 #include "enviroment.h"
@@ -13,3 +16,5 @@ class CMakeGenerator {
         std::string get_output();
         
 };
+
+#endif
