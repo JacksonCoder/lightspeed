@@ -1,23 +1,7 @@
 // configparser.h
+#include "../../include/configparser.h"
 
-#ifndef CONFIGPARSER
-#define CONFIGPARSER
-#include "file.h"
-#include <string>
-#include <cassert>
-#include "../external/json.hpp"
-using json = nlohmann::json;
-
-class ConfigParser {
-    bool has_success = false;
-    std::string error = "No error has occured";
-    json object;
-    bool latest;
-    std::string projname;
-    std::string lsfile;
-    
-public:
-    ConfigParser(File* f) {
+ConfigParser::ConfigParser(File* f) {
         // Get contents of file
         std::string filecontents = f->getContents();
         try {
@@ -44,37 +28,28 @@ public:
         has_success = true;
     }
     
-    bool success() {
+
+bool ConfigParser::success() {
         return has_success;
     }
     
-    std::string error_msg() {
+std::string ConfigParser::error_msg() {
         return error;
     }
     
-    bool getlatest() {
+bool ConfigParser::getlatest() {
         return latest;
-    }
+}
     
-    std::string getprojectname() {
+std::string ConfigParser::getprojectname() {
         return projname;
     }
     
-    std::string getlspath() {
+std::string ConfigParser::getlspath() {
         return lsfile;
     }
-    
-};
 
-class ProjectFileParser {
-    std::string error_msg;
-    std::string name,version,owner;
-    json object;
-    bool has_success = false;
-    std::vector<json> dependencies;
-    std::string custom_install_directory;
-public:
-    ProjectFileParser(File* f) {
+ProjectFileParser::ProjectFileParser(File* f) {
         std::string contents = f->getContents();
         try {
             object = json::parse(contents);
@@ -107,13 +82,6 @@ public:
         }
     }
     
-    std::string get_error() {
-        return error_msg;
-    }
-    
-};
-
-class LSFileParser {
-};
-
-#endif
+std::string ProjectFileParser::get_error() {
+    return error_msg;
+}
