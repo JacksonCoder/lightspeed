@@ -13,6 +13,7 @@ lightspeed/core/src/utils/fileloader.cpp
 lightspeed/core/src/utils/optionswitch.cpp
 lightspeed/core/src/parsing/configparser.cpp
 lightspeed/core/src/compilation/cmakegenerator.cpp
+lightspeed/core/src/utils/codegrab.cpp
 )
 
 install(TARGETS lightspeed-bin RUNTIME DESTINATION bin)

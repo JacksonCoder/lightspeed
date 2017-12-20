@@ -75,6 +75,15 @@ void OptionSwitch::run_switch()
             std::cout << "Done.\nResult:\n" << compiler.get_output();
             return;
         }
+        if(SANDBOX_OPTIONS[c] == "utils") {
+            // Run utils demo
+            std::cout<< "Enter directory (file or HTTP):";
+            std::string file;
+            std::cin >> file;
+            getSource source_grabber(file);
+            std::cout << source_grabber.get() <<std::endl;
+            return;
+        }
     }
     env->stability_check(); // Fails because of invalid command
 }
