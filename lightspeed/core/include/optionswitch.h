@@ -5,6 +5,8 @@
 
 #include "enviroment.h"
 #include "help.h"
+#include "../globals.h"
+#include "cmakegenerator.h"
 
 class OptionSwitch {
     std::tuple<std::string,std::string,bool> local_conf;

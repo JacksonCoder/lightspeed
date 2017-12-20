@@ -25,6 +25,9 @@ class EState {
     
     string option;
     
+    std::vector<std::string> c_linked_libraries, c_exports;
+    std::string c_cmake_v;
+    
     public:
         EState(InputHandleOutput);
         bool setup();
@@ -37,6 +40,14 @@ class EState {
         std::tuple<std::string,std::string,bool> get_state();
         
         std::string get_option();
+        
+        std::vector<std::string> get_linked_library_paths();
+        
+        std::string get_req_cmake_version();
+        
+        std::vector<std::string> get_exports();
+        
+        void set_config_state(std::string,std::vector<std::string>,std::vector<std::string>);
 };
 
 #endif
