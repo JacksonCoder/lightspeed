@@ -19,6 +19,10 @@ EState::EState(InputHandleOutput i) {
     }
 }
 
+EState::EState() {
+    // Empty constructor for testing purposes only. DO NOT USE THIS CODE IN PRODUCTION.
+}
+
 bool EState::setup() {
     //Test config file exists
     File* file = FileLoader::load(conf_access,true);

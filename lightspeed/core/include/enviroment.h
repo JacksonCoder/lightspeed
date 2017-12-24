@@ -29,6 +29,7 @@ class EState {
     std::string c_cmake_v;
     
     public:
+        EState();
         EState(InputHandleOutput);
         bool setup();
         void fail();
