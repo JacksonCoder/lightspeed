@@ -20,3 +20,12 @@ std::map<char,std::string> SANDBOX_OPTIONS = {
     {'c',"compilation"},
     {'u',"utils"}
 };
+
+bool ModuleObject::did_fail() {
+    return has_failed;
+}
+
+void ModuleObject::set_fail(bool val)
+{
+    has_failed = val;
+}
