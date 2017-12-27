@@ -5,6 +5,7 @@
 #include <vector>
 #include <regex>
 #include "fileloader.h"
+#include "../globals.h"
 
 class Directory {
     std::vector<File*> files;
