@@ -14,7 +14,7 @@ class Directory {
 };
 
 
-class getSource {
+class getSource : public ModuleObject {
     std::string path;
     bool is_file;
     //HTTPFetcher httpgetter;

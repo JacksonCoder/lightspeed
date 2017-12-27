@@ -7,10 +7,10 @@
 #include <string>
 #include <cassert>
 #include "../external/json.hpp"
+#include "../globals.h"
 using json = nlohmann::json;
 
-class ConfigParser {
-    bool has_success = false;
+class ConfigParser : public ModuleObject {
     std::string error = "No error has occured";
     json object;
     bool latest;

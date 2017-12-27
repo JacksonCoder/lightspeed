@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "../globals.h"
 
 class InputHandleOutput {
     std::map<std::string,std::string> arguments;
@@ -16,7 +17,7 @@ class InputHandleOutput {
         std::vector<std::string> get_reg_args();
         std::string get_option();
 };
-class InputHandle {
+class InputHandle : public ModuleObject {
     std::map<std::string,std::string> buildargs;
 public:
     InputHandle(int,char**);

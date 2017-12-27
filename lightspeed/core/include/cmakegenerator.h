@@ -7,7 +7,7 @@
 using json = nlohmann::json;
 
 
-class CMakeGenerator {
+class CMakeGenerator : public ModuleObject {
     EState* env;
     std::string output;
     public:

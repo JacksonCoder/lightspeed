@@ -2,6 +2,7 @@
 #include "../../include/configparser.h"
 
 ConfigParser::ConfigParser(File* f) {
+        set_fail(true);
         // Get contents of file
         std::string filecontents = f->getContents();
         try {
@@ -25,12 +26,12 @@ ConfigParser::ConfigParser(File* f) {
         projname = object["ProjName"];
         lsfile = object["LSFile"];
         std::cout << "Loaded"<< std::endl;
-        has_success = true;
+        set_fail(false);
     }
     
 
 bool ConfigParser::success() {
-        return has_success;
+        return !did_fail();
     }
     
 std::string ConfigParser::error_msg() {

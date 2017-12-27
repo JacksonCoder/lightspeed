@@ -13,6 +13,6 @@ class ModuleObject {
 public:
     bool did_fail();
     void set_fail(bool);
-}
+};
 
 #endif

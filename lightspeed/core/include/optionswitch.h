@@ -9,7 +9,7 @@
 #include "cmakegenerator.h"
 #include "codegrab.h"
 
-class OptionSwitch {
+class OptionSwitch : public ModuleObject {
     std::tuple<std::string,std::string,bool> local_conf;
     std::string option;
     EState* env;
