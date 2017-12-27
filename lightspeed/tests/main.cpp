@@ -4,7 +4,7 @@
 TEST(InputHandling,FailsOnNoArguments) {
     char* args[] = {"lightspeed",""};
     InputHandle i = InputHandle(1,args);
-    //ASSERT_TRUE(EState(i).has_failed()); //Do this after inheritance is added
+    ASSERT_TRUE(i.did_fail());
 }
 
 TEST(Compilation,CanBuildFileCorrectly) {
