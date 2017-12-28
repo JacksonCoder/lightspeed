@@ -3,8 +3,8 @@
 EState::EState(InputHandleOutput i) {
     const string DEFAULT_ACCESS = ".lsconf.json";
     // Check if special conf was specified
-    if (i.get_args()["conf"] != "") {
-        conf_access = i.get_args()["conf"];
+    if (i.get_args()["--conf"] != "") {
+        conf_access = i.get_args()["--conf"];
     }
     else {
         conf_access = DEFAULT_ACCESS;
@@ -19,6 +19,10 @@ EState::EState(InputHandleOutput i) {
     }
 }
 
+EState::EState() {
+    // Empty constructor for testing purposes only. DO NOT USE THIS CODE IN PRODUCTION.
+}
+
 bool EState::setup() {
     //Test config file exists
     File* file = FileLoader::load(conf_access,true);
@@ -31,9 +35,7 @@ bool EState::setup() {
         s_error = c.error_msg();
         s_integrity = false;
     } else {
-        s_LSPATH = c.getlspath();
-        s_LATEST = c.getlatest();
-        s_PROJECTNAME = c.getprojectname();
+        s_repos = c.get_repos();
     }
     
     // Test arguments
@@ -61,19 +63,47 @@ void EState::fail_with_external(std::string error) {
 
 void EState::stability_check()
  {
+     std::exception except;
         if(s_error != "") error_status = s_error;
         if(!s_integrity) {
-            fail();
+            throw except;
+        }
+        if(c_error != "") error_status = c_error;
+        if(!c_integrity) {
+            throw except;
         }
 }
 
-std::tuple<std::string, std::string, bool> EState::get_state() {
-    return std::make_tuple(s_PROJECTNAME, s_LSPATH,s_LATEST);
+std::tuple<std::vector< std::string > > EState::get_state()
+{
+    return std::make_tuple(s_repos);
 }
 
 std::string EState::get_option()
 {
     return option;
+}
+
+std::vector<std::string> EState::get_exports()
+{
+    return c_exports;
+}
+        
+std::string EState::get_req_cmake_version()
+{
+    return c_cmake_v;
+}
+        
+std::vector<std::string> EState::get_linked_library_paths()
+{
+    return c_linked_libraries;
+}
+
+void EState::set_config_state(std::string version, std::vector<std::string> libraries, std::vector<std::string> exports)
+{
+    c_cmake_v = version;
+    c_linked_libraries = libraries;
+    c_exports = exports;
 }
 
 

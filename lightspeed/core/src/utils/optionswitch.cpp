@@ -14,36 +14,81 @@ void OptionSwitch::run_switch()
     }
     if (option == "status") {
         std::cout << "Checking state of current project..." << std::endl;
-        env->stability_check();
+        try {
+            env->stability_check();
+        } catch(std::exception&) {
+            env->fail();
+        }
+        std::cout << "Global config file is stable." << std::endl;
         return;
     }
-    if (option == "install") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
+    if (option == "sandbox") {
+        std::cout << "Welcome to the LightSpeed beta sandbox! Test potential features here!" << std::endl;
+        for(auto s : SANDBOX_OPTIONS) {
+            std::cout << s.first << " -> " << s.second << std::endl;
+        }
+        std::cout << "Please select a beta feature to test:";
+        char c;
+        std::cin >> c;
+        if(SANDBOX_OPTIONS[c] == "compilation") {
+            //Run compilation
+            std::cout << "--- Starting compilation sandbox ---" << std::endl;
+            std::cout << "Enter CMake version:";
+            std::string v; std::cin >> v;
+            std::cout <<"Enter a list of file paths (enter '!' to stop entering items:";
+            std::string buffer;
+            std::vector<std::string> libraries;
+            while(buffer != "!") {
+                std::cin >> buffer;
+                if(buffer != "!")
+                    libraries.push_back(buffer);
+            }
+            env->set_config_state(v,libraries,{});
+            std::cout<<"Generating CMake linkage file..." << std::endl;
+            auto compiler = CMakeGenerator(env);
+            compiler.compile();
+            std::cout << "Done.\nResult:\n" << compiler.get_output();
+            return;
+        }
+        if(SANDBOX_OPTIONS[c] == "utils") {
+            // Run utils demo
+            std::cout<< "Enter directory (file or HTTP):";
+            std::string file;
+            std::cin >> file;
+            getSource source_grabber(file);
+            std::cout << source_grabber.get() <<std::endl;
+            return;
+        }
+        if(SANDBOX_OPTIONS[c] == "network") {
+            // No current network features
+            std::cout << "Network is still being created. Sorry about that!" << std::endl;
+            return;
+        }
+        if(SANDBOX_OPTIONS[c] == "parsing") {
+            // No current parsing features
+            std::cout << "Enter file location of package file:";
+            std::string loc;std::cin>>loc;
+            ProjectFileParser parser = ProjectFileParser(FileLoader::load(loc,true));
+            if(parser.did_fail()) {
+                std::cout << "--- ERROR ---" << std::endl;
+                std::cout << parser.get_error() << std::endl;
+                return;
+            }
+            std::cout << "File parsed successfully. Details:" << std::endl;
+            
+            std::cout << "List of dependencies:\n";
+            for(auto j : parser.get_dependencies()) {
+                std::cout << j << std::endl;
+            }
+            std::cout << "Build information:\n";
+            std::cout << "Should generate CMake linkage file: " << parser.make_cmake_link() << std::endl;
+            std::cout << "Build system: " << parser.type() << std::endl;
+            std::cout << "Directories/files to include:" << std::endl;
+            for(auto i : parser.get_include()) {
+                std::cout << i << std::endl;
+            }
+            return;
+        }
     }
-    if (option == "create") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "load") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "search") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "build") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "repo") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "remove") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    env->stability_check(); // Fails because of invalid command
+    env->fail(); // Or should we call set_fail()? Maybe do later if needs be.
 }

@@ -7,15 +7,13 @@
 #include <string>
 #include <cassert>
 #include "../external/json.hpp"
+#include "../globals.h"
 using json = nlohmann::json;
 
-class ConfigParser {
-    bool has_success = false;
+class ConfigParser : public ModuleObject {
     std::string error = "No error has occured";
     json object;
-    bool latest;
-    std::string projname;
-    std::string lsfile;
+    std::vector<std::string> repos;
     
 public:
     ConfigParser(File*);
@@ -24,25 +22,30 @@ public:
     
     std::string error_msg();
     
-    bool getlatest();
-    
-    std::string getprojectname();
-    
-    std::string getlspath();
+    std::vector<std::string> get_repos();
     
 };
 
-class ProjectFileParser {
+class ProjectFileParser : public ModuleObject {
     std::string error_msg;
     std::string name,version,owner;
     json object;
-    bool has_success = false;
     std::vector<json> dependencies;
     std::string custom_install_directory;
+    bool link_cmake_deps;
+    std::string b_type;
+    std::vector<std::string> b_include;
 public:
     ProjectFileParser(File*);
     
     std::string get_error();
     
+    std::vector<json> get_dependencies();
+    
+    std::vector<std::string> get_include();
+    
+    bool make_cmake_link();
+    
+    std::string type();
 };
 #endif
