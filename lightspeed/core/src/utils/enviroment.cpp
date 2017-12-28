@@ -74,7 +74,7 @@ void EState::stability_check()
         }
 }
 
-std::tuple< std::vector< std::__cxx11::string > > EState::get_state()
+std::tuple<std::vector< std::string > > EState::get_state()
 {
     return std::make_tuple(s_repos);
 }
