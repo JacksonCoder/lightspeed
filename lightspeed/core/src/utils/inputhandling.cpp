@@ -48,4 +48,6 @@ InputHandleOutput InputHandle::out() {
     return InputHandleOutput(buildargs);
 }
 
-void InputHandle::build() {}
+void InputHandle::build() {
+    
+}

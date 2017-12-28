@@ -14,39 +14,14 @@ void OptionSwitch::run_switch()
     }
     if (option == "status") {
         std::cout << "Checking state of current project..." << std::endl;
-        env->stability_check();
+        try {
+            env->stability_check();
+        } catch(std::exception&) {
+            env->fail();
+        }
+        std::cout << "Global config file is stable." << std::endl;
         return;
     }
-    /*
-    if (option == "install") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "create") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "load") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "search") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "build") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "repo") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    if (option == "remove") {
-        std::cout<< "Not implemented yet" << std::endl;
-        return;
-    }
-    */
     if (option == "sandbox") {
         std::cout << "Welcome to the LightSpeed beta sandbox! Test potential features here!" << std::endl;
         for(auto s : SANDBOX_OPTIONS) {
@@ -84,6 +59,16 @@ void OptionSwitch::run_switch()
             std::cout << source_grabber.get() <<std::endl;
             return;
         }
+        if(SANDBOX_OPTIONS[c] == "network") {
+            // No current network features
+            std::cout << "Network is still being created. Sorry about that!" << std::endl;
+            return;
+        }
+        if(SANDBOX_OPTIONS[c] == "parsing") {
+            // No current parsing features
+            std::cout << "Parsing is still being created. Sorry about that!" << std::endl;
+            return;
+        }
     }
-    env->stability_check(); // Fails because of invalid command
+    env->fail(); // Or should we call set_fail()? Maybe do later if needs be.
 }

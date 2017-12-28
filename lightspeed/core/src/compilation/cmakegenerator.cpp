@@ -14,7 +14,7 @@ void CMakeGenerator::compile()
     std::string cmake_v = env->get_req_cmake_version();
     
     //Get project name
-    std::string proj_name = std::get<0>(env->get_state()); //First item in tuple is project name
+    std::string proj_name = "TestProject";//std::get<0>(env->get_state()); //First item in tuple is project name
     
     //Get exports
     auto exports = env->get_exports();

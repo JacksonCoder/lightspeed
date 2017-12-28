@@ -13,9 +13,7 @@ using json = nlohmann::json;
 class ConfigParser : public ModuleObject {
     std::string error = "No error has occured";
     json object;
-    bool latest;
-    std::string projname;
-    std::string lsfile;
+    std::vector<std::string> repos;
     
 public:
     ConfigParser(File*);
@@ -24,15 +22,11 @@ public:
     
     std::string error_msg();
     
-    bool getlatest();
-    
-    std::string getprojectname();
-    
-    std::string getlspath();
+    std::vector<std::string> get_repos();
     
 };
 
-class ProjectFileParser {
+class ProjectFileParser : public ModuleObject {
     std::string error_msg;
     std::string name,version,owner;
     json object;
