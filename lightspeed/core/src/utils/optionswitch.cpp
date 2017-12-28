@@ -66,7 +66,27 @@ void OptionSwitch::run_switch()
         }
         if(SANDBOX_OPTIONS[c] == "parsing") {
             // No current parsing features
-            std::cout << "Parsing is still being created. Sorry about that!" << std::endl;
+            std::cout << "Enter file location of package file:";
+            std::string loc;std::cin>>loc;
+            ProjectFileParser parser = ProjectFileParser(FileLoader::load(loc,true));
+            if(parser.did_fail()) {
+                std::cout << "--- ERROR ---" << std::endl;
+                std::cout << parser.get_error() << std::endl;
+                return;
+            }
+            std::cout << "File parsed successfully. Details:" << std::endl;
+            
+            std::cout << "List of dependencies:\n";
+            for(auto j : parser.get_dependencies()) {
+                std::cout << j << std::endl;
+            }
+            std::cout << "Build information:\n";
+            std::cout << "Should generate CMake linkage file: " << parser.make_cmake_link() << std::endl;
+            std::cout << "Build system: " << parser.type() << std::endl;
+            std::cout << "Directories/files to include:" << std::endl;
+            for(auto i : parser.get_include()) {
+                std::cout << i << std::endl;
+            }
             return;
         }
     }

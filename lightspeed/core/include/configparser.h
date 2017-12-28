@@ -30,13 +30,22 @@ class ProjectFileParser : public ModuleObject {
     std::string error_msg;
     std::string name,version,owner;
     json object;
-    bool has_success = false;
     std::vector<json> dependencies;
     std::string custom_install_directory;
+    bool link_cmake_deps;
+    std::string b_type;
+    std::vector<std::string> b_include;
 public:
     ProjectFileParser(File*);
     
     std::string get_error();
     
+    std::vector<json> get_dependencies();
+    
+    std::vector<std::string> get_include();
+    
+    bool make_cmake_link();
+    
+    std::string type();
 };
 #endif

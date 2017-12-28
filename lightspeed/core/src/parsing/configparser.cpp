@@ -47,12 +47,15 @@ std::vector<std::string> ConfigParser::get_repos() {
 }
 
 ProjectFileParser::ProjectFileParser(File* f) {
+        set_fail(false);
+        auto c = std::clock();
         std::string contents = f->getContents();
         try {
             object = json::parse(contents);
         }
         catch(...) {
             error_msg = "An exception was thrown during parsing of the JSON data";
+            set_fail(true);
             return;
         }
         try {
@@ -62,23 +65,83 @@ ProjectFileParser::ProjectFileParser(File* f) {
             if(!(object["owner"].is_string())) throw e;
         }
         catch (std::exception& e) {
-            std::cout<<"B";
             error_msg = "There was an error parsing your package definition file. Check the file for typos";
+            set_fail(true);
             return;
         }
+        //Parse manifest
         name = object["name"];
         version = object["version"];
         owner = object["owner"];
+        
+        //Parse dependencies
         json deproot = object["dependencies"];
         if (!deproot.is_array()) {
             error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
+            set_fail(true);
             return;
+        }
+        for (auto d : deproot) {
+            if (!d.is_object() || !d["name"].is_string() || !d["version"].is_string()) {
+                error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
+                set_fail(true);
+                return;
+            }
         }
         for (auto package : deproot) {
             dependencies.push_back(package);
         }
-    }
+        
+        //Parse build info
+        json build = object["build"];
+        if(!build.is_object()) {
+            error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
+            set_fail(true);
+            return;
+        }
+        json create_cmake_link = build["cmake-create-dep-file"];
+        json type = build["type"];
+        json include = build["include"];
+        if(!create_cmake_link.is_boolean() || !type.is_string() || !include.is_array()) {
+            error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
+            set_fail(true);
+            return;
+        }
+        link_cmake_deps = create_cmake_link;
+        b_type = type;
+        for(auto i : include) {
+            if(!i.is_string()) {
+                error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
+                set_fail(true);
+                return;
+            }
+            b_include.push_back(i);
+        }
+        double diff = std::clock() - c;
+        double sec = diff / CLOCKS_PER_SEC;
+        std::cout.precision(10);
+        std::cout << "Parsed package file in " << sec << " seconds" << std::endl;
+}
     
 std::string ProjectFileParser::get_error() {
     return error_msg;
+}
+
+std::vector<json> ProjectFileParser::get_dependencies()
+{
+    return dependencies;
+}
+
+std::vector<std::string> ProjectFileParser::get_include()
+{
+    return b_include;
+}
+
+bool ProjectFileParser::make_cmake_link() {
+    return link_cmake_deps;
+}
+
+std::string ProjectFileParser::type()
+{
+    return b_type;
 }
