@@ -15,6 +15,7 @@ public:
     void set_open(bool);
     void append_contents(std::string);
     std::string getContents();
+    std::string get_path() { return filename; }
 };
 
 #endif

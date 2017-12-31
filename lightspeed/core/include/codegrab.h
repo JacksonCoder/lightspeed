@@ -6,12 +6,17 @@
 #include <regex>
 #include "fileloader.h"
 #include "../globals.h"
-
+#include <boost/filesystem.hpp>
+#include <boost/range/iterator_range.hpp>
+using namespace boost::filesystem;
 class Directory {
     std::vector<File*> files;
+    std::vector<Directory> subdirectories;
     public:
         void appendFile(File*);
-        std::vector<File*> getFiles();
+        void appendDirectory(Directory);
+        void print();
+        void release();
 };
 
 
@@ -23,7 +28,8 @@ class getSource : public ModuleObject {
     Directory src;
     public:
         getSource(std::string);
-        std::string get();
+        ~getSource();
+        void get();
         Directory results();
 };
 

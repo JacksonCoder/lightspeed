@@ -56,7 +56,7 @@ void OptionSwitch::run_switch()
             std::string file;
             std::cin >> file;
             getSource source_grabber(file);
-            std::cout << source_grabber.get() <<std::endl;
+            source_grabber.get();
             return;
         }
         if(SANDBOX_OPTIONS[c] == "network") {
