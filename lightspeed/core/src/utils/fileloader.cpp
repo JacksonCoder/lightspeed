@@ -24,5 +24,6 @@ File* FileLoader::load(std::string fname, bool cwd)  {
         f->append_contents(buffer);
     }
     f->set_open(true);
+    f_read.close();
     return f;
 }
