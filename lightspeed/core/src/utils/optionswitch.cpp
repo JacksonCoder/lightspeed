@@ -61,7 +61,9 @@ void OptionSwitch::run_switch()
         }
         if(SANDBOX_OPTIONS[c] == "network") {
             // No current network features
-            std::cout << "Network is still being created. Sorry about that!" << std::endl;
+            HTTPConnection h("http://github.com");
+            std::cout << "Testing loading bar:" << std::endl;
+            h.fetch(true);
             return;
         }
         if(SANDBOX_OPTIONS[c] == "parsing") {

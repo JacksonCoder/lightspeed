@@ -8,6 +8,7 @@
 #include "../globals.h"
 #include "cmakegenerator.h"
 #include "codegrab.h"
+#include "network.h"
 
 class OptionSwitch : public ModuleObject {
     std::tuple<std::vector<std::string> > local_conf;
