@@ -61,10 +61,13 @@ void OptionSwitch::run_switch()
         }
         if(SANDBOX_OPTIONS[c] == "network") {
             // No current network features
-            HTTPConnection h("http://github.com");
-            std::cout << "Testing loading bar:" << std::endl;
+            std::string path;
+            std::cout << "Enter URL:";
+            std::cin >> path;
+            HTTPConnection h(path);
+            std::cout << "Directory output:" << std::endl;
             h.fetch(true,"");
-            std::cout << "Result:" << std::endl;
+            std::cout << std::endl << "Result:" << std::endl;
             h.getResult().print();
             return;
         }

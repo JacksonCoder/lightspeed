@@ -21,26 +21,6 @@ size_t set_write_data(void* buffer, size_t size, size_t nmemb, std::string* user
     return size*nmemb;
 }
 
-std::string fetch_file(std::string path,bool display_bar) {
-    CURLcode res;
-    std::string return_s;
-    auto curl = curl_easy_init();
-    if(curl) {
-        curl_easy_setopt(curl,CURLOPT_URL,path.c_str());
-        curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,set_write_data);
-        curl_easy_setopt(curl,CURLOPT_WRITEDATA,&return_str);
-        res = curl_easy_perform(curl);
-        return_s = return_str;
-        curl_easy_cleanup(curl);
-        if(res != 0) {
-            //Network connectivity issue
-        }
-    } else {
-        // Network connectivity issue
-    }
-    return return_s;
-}
-
 void displayBar(int percent, bool first_time) {
     //Bar is 102 characters long, plus 4 characters for the time display
     
@@ -64,6 +44,32 @@ void displayBar(int percent, bool first_time) {
     for(int i = 0; i < 3 - percentLen;i++) std::cout << " ";
     std::cout << std::flush;
 }
+
+std::string fetch_file(std::string path,bool display_bar) {
+    CURLcode res;
+    std::string return_s;
+    auto curl = curl_easy_init();
+    if(curl) {
+        if(display_bar) displayBar(1,true);
+        curl_easy_setopt(curl,CURLOPT_URL,path.c_str());
+        if(display_bar) displayBar(25,false);
+        curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,set_write_data);
+        curl_easy_setopt(curl,CURLOPT_WRITEDATA,&return_str);
+        if(display_bar) displayBar(50,false);
+        res = curl_easy_perform(curl);
+        if(display_bar) displayBar(100,false);
+        return_s = return_str;
+        curl_easy_cleanup(curl);
+        if(res != 0) {
+            //Network connectivity issue
+        }
+    } else {
+        // Network connectivity issue
+    }
+    return return_s;
+}
+
+
 
 HTTPConnection::HTTPConnection(std::string path) {
     url = path;
