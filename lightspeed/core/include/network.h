@@ -15,4 +15,10 @@ public:
     Directory getResult() { return download_res; }
 };
 
+size_t set_write_data(void*,size_t,size_t,std::string*);
+
+void displayBar(int,bool);
+
+std::string fetch_file(std::string,bool);
+
 #endif
