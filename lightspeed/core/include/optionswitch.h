@@ -7,6 +7,7 @@
 #include "help.h"
 #include "../globals.h"
 #include "cmakegenerator.h"
+#include "network.h"
 #include "codegrab.h"
 
 class OptionSwitch : public ModuleObject {

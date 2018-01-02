@@ -61,7 +61,14 @@ void OptionSwitch::run_switch()
         }
         if(SANDBOX_OPTIONS[c] == "network") {
             // No current network features
-            std::cout << "Network is still being created. Sorry about that!" << std::endl;
+            std::string path;
+            std::cout << "Enter URL:";
+            std::cin >> path;
+            HTTPConnection h(path);
+            std::cout << "Directory output:" << std::endl;
+            h.fetch(true,"");
+            std::cout << std::endl << "Result:" << std::endl;
+            h.getResult().print();
             return;
         }
         if(SANDBOX_OPTIONS[c] == "parsing") {

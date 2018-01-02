@@ -1,4 +1,6 @@
 #include "../../include/codegrab.h"
+#include "../../include/network.h"
+
 Directory getDirectory(std::string path) {
     Directory src;
     directory_iterator di(path);
@@ -53,7 +55,10 @@ getSource::~getSource() {
 
 void getSource::get() {
     if (!is_file) {
-        std::cout << "Network interfacing is not implemented yet." << std::endl;
+        HTTPConnection http(path);
+        std::cout << "Fetching package from URL: " + path << std::endl;
+        http.fetch(true,"");
+        src = http.getResult();
         return;
     }
     // It's a local directory: start reading from it

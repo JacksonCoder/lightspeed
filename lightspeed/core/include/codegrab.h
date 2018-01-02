@@ -6,6 +6,7 @@
 #include <regex>
 #include "fileloader.h"
 #include "../globals.h"
+//#include "network.h"
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
 using namespace boost::filesystem;

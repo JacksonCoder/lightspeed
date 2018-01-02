@@ -20,5 +20,6 @@ int main (int argc,char** argv) {
     //estate.clean();
     delete estate;
     delete inputhandler;
+    delete o;
     return 0;
 }
