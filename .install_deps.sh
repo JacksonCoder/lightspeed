@@ -10,10 +10,3 @@ rm -rf lightspeed/core/external/json
 
 git clone https://github.com/google/googletest lightspeed/tests/external/googletest
 
-# Install Boost
-
-sudo apt-get install libboost-all-dev
-
-# Install cURL
-
-sudo apt-get install libcurl4-openssl-dev
