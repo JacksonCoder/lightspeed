@@ -1,5 +1,46 @@
 #include "../../include/network.h"
 
+std::string return_str;
+
+size_t set_write_data(void* buffer, size_t size, size_t nmemb, std::string* userp)
+{
+    
+    size_t newLength = size*nmemb;
+    size_t oldLength = userp->size();
+    try
+    {
+        userp->resize(oldLength + newLength);
+    }
+    catch(std::bad_alloc &e)
+    {
+        //handle memory problem
+        return 0;
+    }
+
+    std::copy((char*)buffer,(char*)buffer+newLength,userp->begin()+oldLength);
+    return size*nmemb;
+}
+
+std::string fetch_file(std::string path,bool display_bar) {
+    CURLcode res;
+    std::string return_s;
+    auto curl = curl_easy_init();
+    if(curl) {
+        curl_easy_setopt(curl,CURLOPT_URL,path.c_str());
+        curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,set_write_data);
+        curl_easy_setopt(curl,CURLOPT_WRITEDATA,&return_str);
+        res = curl_easy_perform(curl);
+        return_s = return_str;
+        curl_easy_cleanup(curl);
+        if(res != 0) {
+            //Network connectivity issue
+        }
+    } else {
+        // Network connectivity issue
+    }
+    return return_s;
+}
+
 void displayBar(int percent, bool first_time) {
     //Bar is 102 characters long, plus 4 characters for the time display
     
@@ -33,14 +74,16 @@ HTTPConnection::~HTTPConnection()
     download_res.release();
 }
 
-void HTTPConnection::fetch(bool use_loading_bar)
-{
-    unsigned int progress = 1; // For loading purposes
-    displayBar(progress,true);
-    for(;progress <= 100;progress += 5) {
-        displayBar(progress,false);
-        sleep(1);
-    }
-    displayBar(100,false);
+void HTTPConnection::fetch(bool use_loading_bar,std::string dest)
+{    
+    // Run scan of files to download
+
+    // Start download process
+    
+    std::string file = fetch_file(this->url,use_loading_bar);
+    
+    File* f = new File("download_result");
+    f->append_contents(file);
+    download_res.appendFile(f);
 }
 

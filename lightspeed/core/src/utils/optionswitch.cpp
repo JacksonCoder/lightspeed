@@ -63,7 +63,9 @@ void OptionSwitch::run_switch()
             // No current network features
             HTTPConnection h("http://github.com");
             std::cout << "Testing loading bar:" << std::endl;
-            h.fetch(true);
+            h.fetch(true,"");
+            std::cout << "Result:" << std::endl;
+            h.getResult().print();
             return;
         }
         if(SANDBOX_OPTIONS[c] == "parsing") {
