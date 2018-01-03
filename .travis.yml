@@ -10,12 +10,10 @@ matrix:
       addons:
         apt:
           packages:
+            - libcurl4-openssl-dev
+            - libboost-all-dev
             - g++-5
           sources: &sources
             - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
-addons:
-        apt:
-                packages:
-                        - libcurl4-openssl-dev
-                        - libboost-all-dev
+                        
