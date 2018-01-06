@@ -12,5 +12,6 @@
 #include "../core/include/help.h"
 #include "../core/include/optionswitch.h"
 #include "../core/include/network.h"
+#include "../core/include/errormanager.h"
 
 #endif

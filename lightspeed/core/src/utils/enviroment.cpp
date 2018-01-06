@@ -24,15 +24,16 @@ EState::EState() {
 }
 
 bool EState::setup() {
-    //Test config file exists
+    // Make sure configuration file (containing repos) exists
+    
     File* file = FileLoader::load(conf_access,true);
     if (!file->open()) {
-        error_status = "Could not access local configuration file: '" + conf_access + "'. Please check that the file exists or you are in the proper directory";
+        ErrorManager::error("Could not access local configuration file: '" + conf_access + "'. Please check that the file exists or you are in the proper directory","enviroment",true);
         return false;
     }
     ConfigParser c = ConfigParser(file);
     if(!c.success()) {
-        s_error = c.error_msg();
+        ErrorManager::error(c.error_msg(),"enviroment",false);
         s_integrity = false;
     } else {
         s_repos = c.get_repos();

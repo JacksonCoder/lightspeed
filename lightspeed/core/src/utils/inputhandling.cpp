@@ -31,9 +31,9 @@ InputHandle::InputHandle(int argc, char** argv) {
     
     if (argc<1) {
         set_fail(true);
+        ErrorManager::error("There were no command line arguments passed to the program.","input handling",true);
         return;
     }
-    
     
     argc -= 1;
     std::vector<std::string> args;

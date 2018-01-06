@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "errormanager.h"
 #include "../globals.h"
 
 class InputHandleOutput {

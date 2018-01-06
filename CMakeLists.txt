@@ -18,6 +18,7 @@ lightspeed/core/src/compilation/cmakegenerator.cpp
 lightspeed/core/src/utils/codegrab.cpp
 lightspeed/core/src/network/httpconnection.cpp
 lightspeed/core/src/utils/netutils.cpp
+lightspeed/core/src/utils/errormanager.cpp
 )
 add_executable(lightspeed-test
 lightspeed/tests/main.cpp
@@ -35,6 +36,7 @@ lightspeed/core/src/compilation/cmakegenerator.cpp
 lightspeed/core/src/utils/codegrab.cpp
 lightspeed/core/src/network/httpconnection.cpp
 lightspeed/core/src/utils/netutils.cpp
+lightspeed/core/src/utils/errormanager.cpp
 )
 target_link_libraries(ls_libs ${Boost_LIBRARIES} curl)
 target_link_libraries(lightspeed-bin ${Boost_LIBRARIES} curl)
