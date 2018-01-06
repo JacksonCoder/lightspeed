@@ -46,6 +46,7 @@ void displayBar(int percent, bool first_time) {
 }
 
 std::string fetch_file(std::string path,bool display_bar) {
+    network_success = true;
     CURLcode res;
     std::string return_s;
     auto curl = curl_easy_init();
@@ -62,9 +63,13 @@ std::string fetch_file(std::string path,bool display_bar) {
         curl_easy_cleanup(curl);
         if(res != 0) {
             //Network connectivity issue
+            std::cout << "f" << std::flush;
+            network_success = false;
         }
     } else {
         // Network connectivity issue
+        network_success = false;
+        std::cout << "f2" << std::flush;
     }
     return return_s;
 }

@@ -11,5 +11,6 @@
 #include "../core/include/inputhandling.h"
 #include "../core/include/help.h"
 #include "../core/include/optionswitch.h"
+#include "../core/include/network.h"
 
 #endif

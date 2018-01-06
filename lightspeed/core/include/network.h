@@ -5,6 +5,8 @@
 #include "codegrab.h"
 #include "file.h"
 
+extern bool network_success;
+
 class HTTPConnection : public ModuleObject {
     Directory download_res;
     std::string checksum,url;

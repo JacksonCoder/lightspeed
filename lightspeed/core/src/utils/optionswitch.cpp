@@ -68,6 +68,7 @@ void OptionSwitch::run_switch()
             std::cout << "Directory output:" << std::endl;
             h.fetch(true,"");
             std::cout << std::endl << "Result:" << std::endl;
+            if (h.did_fail()) std::cout << "There was an error trying to connect" << std::endl;
             h.getResult().print();
             return;
         }
