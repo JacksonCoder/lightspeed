@@ -11,6 +11,7 @@ extern std::map<char,std::string> SANDBOX_OPTIONS;
 class ModuleObject {
     bool has_failed;
 public:
+    ModuleObject();
     bool did_fail();
     void set_fail(bool);
 };

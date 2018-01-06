@@ -23,6 +23,10 @@ std::map<char,std::string> SANDBOX_OPTIONS = {
     {'p',"parsing"}
 };
 
+ModuleObject::ModuleObject() {
+    has_failed = false;
+}
+
 bool ModuleObject::did_fail() {
     return has_failed;
 }
