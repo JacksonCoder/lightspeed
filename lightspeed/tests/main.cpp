@@ -8,8 +8,7 @@
 
 TEST(Utils,InputHandlerFailsOnNoArguments) {
     char* args[1];
-    args[0] = "lightspeed";
-    InputHandle i = InputHandle(1,args);
+    InputHandle i = InputHandle(0,args);
     ASSERT_TRUE(i.did_fail());
 }
 

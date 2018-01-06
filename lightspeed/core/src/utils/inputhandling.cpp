@@ -25,6 +25,16 @@ std::string InputHandleOutput::get_option() {
 }
 
 InputHandle::InputHandle(int argc, char** argv) {
+    // Refactor this code
+    
+    // Verify some things
+    
+    if (argc<1) {
+        set_fail(true);
+        return;
+    }
+    
+    
     argc -= 1;
     std::vector<std::string> args;
     for(int argv_i = 1; argv_i < argc+1; argv_i++) {

@@ -6,6 +6,10 @@
 int main (int argc,char** argv) {
     // Create an input handle and prebuild the outcome
     InputHandle* inputhandler = new InputHandle(argc,argv);
+    if (inputhandler->did_fail()) {
+        std::cout << "No arguments were passed to the main function. Exiting now" << std::endl;
+        return 1;
+    }
     inputhandler->build();
     
     // Load in the enviroment and verify it's integrity
