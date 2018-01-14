@@ -32,12 +32,8 @@ bool EState::setup() {
         return false;
     }
     ConfigParser c = ConfigParser(file);
-    if(!c.success()) {
-        ErrorManager::error(c.error_msg(),"enviroment",false);
-        s_integrity = false;
-    } else {
-        s_repos = c.get_repos();
-    }
+    ErrorManager::release();
+    s_repos = c.get_repos();
     
     // Test arguments
     bool option_valid = false;
@@ -46,7 +42,7 @@ bool EState::setup() {
     }
     if (!option_valid) {
         s_integrity = false; //TODO: Make arg_integrity
-        error_status = "The command " + option + " is not recognized as a valid command. Type 'lightspeed help' for help with commands"; //TODO: Create arg_error variable group
+        ErrorManager::error("The command " + option + " is not recognized as a valid command. Type 'lightspeed help' for help with commands", "enviroment",true);
     }
     return true;
 }

@@ -4,6 +4,7 @@
 #include <curl/curl.h>
 #include "codegrab.h"
 #include "file.h"
+#include "errormanager.h"
 
 extern bool network_success;
 
