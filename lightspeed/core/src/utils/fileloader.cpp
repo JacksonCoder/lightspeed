@@ -5,9 +5,12 @@ File* FileLoader::load(std::string fname, bool cwd)  {
         fname = get_current_dir_name() + std::string("/") + fname;
     }
     File* f = new File(fname);
-    std::ifstream f_read;
+    std::ifstream f_read(fname);
     try {
-        f_read.open(fname);
+        if(!f_read) {
+            f->set_open(false);
+            return f;
+        }
     }
     catch(...) {
         f->set_open(false);

@@ -11,7 +11,8 @@ std::vector<std::string> CMD_OPTIONS  = {
     "search",
     "remove",
     "repo",
-    "status"
+    "status",
+    "sandbox"
 };
 
 const std::string LS_VERSION = "0.1";

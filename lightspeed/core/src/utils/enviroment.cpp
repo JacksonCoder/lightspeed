@@ -23,13 +23,12 @@ EState::EState() {
     // Empty constructor for testing purposes only. DO NOT USE THIS CODE IN PRODUCTION.
 }
 
-bool EState::setup() {
+void EState::setup() {
     // Make sure configuration file (containing repos) exists
     
     File* file = FileLoader::load(conf_access,true);
     if (!file->open()) {
         ErrorManager::error("Could not access local configuration file: '" + conf_access + "'. Please check that the file exists or you are in the proper directory","enviroment",true);
-        return false;
     }
     ConfigParser c = ConfigParser(file);
     ErrorManager::release();
@@ -44,31 +43,11 @@ bool EState::setup() {
         s_integrity = false; //TODO: Make arg_integrity
         ErrorManager::error("The command " + option + " is not recognized as a valid command. Type 'lightspeed help' for help with commands", "enviroment",true);
     }
-    return true;
 }
 
-void EState::fail() {
-    std::cerr<<"An error occured while running LightSpeed:"<<std::endl;
-    std::cerr<<error_status<<std::endl;
-    exit(1);
-}
-        
-void EState::fail_with_external(std::string error) {
-    error_status = error;
-    fail();
-}
-
-void EState::stability_check()
+bool EState::stability_check()
  {
-     std::exception except;
-        if(s_error != "") error_status = s_error;
-        if(!s_integrity) {
-            throw except;
-        }
-        if(c_error != "") error_status = c_error;
-        if(!c_integrity) {
-            throw except;
-        }
+     return true;
 }
 
 std::tuple<std::vector< std::string > > EState::get_state()

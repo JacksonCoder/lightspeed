@@ -17,7 +17,7 @@ void OptionSwitch::run_switch()
         try {
             env->stability_check();
         } catch(std::exception&) {
-            env->fail();
+            std::cout << "Global config file is not stable" << std::endl;
         }
         std::cout << "Global config file is stable." << std::endl;
         return;
@@ -98,5 +98,5 @@ void OptionSwitch::run_switch()
             return;
         }
     }
-    env->fail(); // Or should we call set_fail()? Maybe do later if needs be.
+    ErrorManager::error(option + " is not a valid command. Run `lightspeed-bin help` for a list of commands","optionswitch",true); // This shouldn't be run, but we should catch things if they do somehow get there.
 }

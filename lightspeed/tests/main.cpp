@@ -13,7 +13,11 @@ TEST(Utils,InputHandlerFailsOnNoArguments) {
 }
 
 TEST(Utils,FailsOnNonexistentFile) {
-
+    File* f = FileLoader::load("some_file_that_doesnt_exist.txt",true);
+    File* f2 = FileLoader::load("another_file_that_doesnt_exist.txt",false);
+    ASSERT_TRUE(!f->open());
+    ASSERT_TRUE(!f2->open());
+    
 }
 
 TEST(Utils,FailsOnNoLightSpeedJSON) {
@@ -60,6 +64,9 @@ TEST(Compilation,FailsOnNullInput) {
 //
 
 TEST(Network,IsConnectedToInternet) {
+    HTTPConnection h = HTTPConnection("http://google.com");
+    h.fetch(false,"");
+    EXPECT_TRUE(!h.did_fail()) << "You are not connected to the internet, which means network tests will FAIL.";
 
 }
 
