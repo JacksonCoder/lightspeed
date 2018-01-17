@@ -8,12 +8,27 @@ extern const std::string LS_VERSION;
 extern std::vector<std::string> CMD_OPTIONS;
 extern std::map<char,std::string> SANDBOX_OPTIONS;
 
-class ModuleObject {
+template <typename T>
+class ProcessClass {
     bool has_failed;
+    T result;
 public:
-    ModuleObject();
     bool did_fail();
-    void set_fail(bool);
+    virtual void run() = 0;
+    virtual T fetch();
+};
+
+class StatusClass {
+    // This class doesn't have too much stuff built in
+    bool is_stable;
+public:
+    virtual void stability_update() = 0;
+};
+
+template <typename T>
+class DispatcherClass {
+public:
+    virtual void dispatch(T input) = 0;
 };
 
 #endif
