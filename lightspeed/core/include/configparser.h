@@ -10,42 +10,34 @@
 #include "../globals.h"
 using json = nlohmann::json;
 
-class ConfigParser : public ModuleObject {
-    std::string error = "No error has occured";
+class LightSpeedConfigurationParser : public ProcessClass<std::vector<std::string> > {
     json object;
     std::vector<std::string> repos;
     
 public:
-    ConfigParser(File*);
+    LightSpeedConfigurationParser(File*);
     
-    bool success();
+    virtual void run();
     
-    std::string error_msg();
-    
-    std::vector<std::string> get_repos();
+    virtual std::vector<std::string> fetch();
     
 };
 
-class ProjectFileParser : public ModuleObject {
-    std::string error_msg;
-    std::string name,version,owner;
-    json object;
+
+struct ProjectFileData {
+    std::string name,version,owner,build_type;
     std::vector<json> dependencies;
-    std::string custom_install_directory;
+    std::vector<std::string> build_includes;
     bool link_cmake_deps;
-    std::string b_type;
-    std::vector<std::string> b_include;
+    ProjectFileData(std::string,std::string,std::string,std::string,std::vector<json>,std::vector<std::string>,bool);
+};
+
+class ProjectFileParser : public ProcessClass<ProjectFileData> {
 public:
     ProjectFileParser(File*);
     
-    std::string get_error();
+    virtual void run();
     
-    std::vector<json> get_dependencies();
-    
-    std::vector<std::string> get_include();
-    
-    bool make_cmake_link();
-    
-    std::string type();
+    virtual ProjectFileData fetch();
 };
 #endif

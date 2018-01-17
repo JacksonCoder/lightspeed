@@ -8,13 +8,12 @@
 
 extern bool network_success;
 
-class HTTPConnection : public ModuleObject {
-    Directory download_res;
-    std::string checksum,url;
+class HTTPFetcher : public ProcessClass<Directory> {
+    std::string url;
+    bool use_loading_bar;
 public:
-    HTTPConnection(std::string); //first arg is url
-    ~HTTPConnection();
-    void fetch(bool,std::string); //first arg is show loading bar
+    HTTPFetcher(std::string,bool);
+    virtual void fetch(bool,std::string); //first arg is show loading bar
     Directory getResult() { return download_res; }
 };
 

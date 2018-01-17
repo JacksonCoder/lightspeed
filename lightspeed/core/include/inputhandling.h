@@ -8,7 +8,7 @@
 #include "errormanager.h"
 #include "../globals.h"
 
-class InputHandleOutput {
+class InputHandleOutput : StatusClass {
     std::map<std::string,std::string> arguments;
     std::vector<std::string> reg_args;
     std::string option;
@@ -18,13 +18,13 @@ class InputHandleOutput {
         std::vector<std::string> get_reg_args();
         std::string get_option();
 };
-class InputHandle : public ModuleObject {
+class InputHandle : public ProcessClass<InputHandleOutput> {
     std::map<std::string,std::string> buildargs;
 public:
     InputHandle(int,char**);
     
-    void build();
-    InputHandleOutput out();
+    virtual void run();
+    virtual InputHandleOutput fetch();
 };
 
 

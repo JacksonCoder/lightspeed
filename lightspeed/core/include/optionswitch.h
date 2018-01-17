@@ -10,14 +10,12 @@
 #include "network.h"
 #include "codegrab.h"
 
-class OptionSwitch : public ModuleObject {
+class OptionSwitch : public DispatcherClass<EState*> {
     std::tuple<std::vector<std::string> > local_conf;
     std::string option;
     EState* env;
     public:
-    OptionSwitch(EState*);
-    
-    void run_switch ();
+    virtual void dispatch(EState*);
     
 };
 

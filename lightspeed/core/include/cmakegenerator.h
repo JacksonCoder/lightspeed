@@ -7,13 +7,13 @@
 using json = nlohmann::json;
 
 
-class CMakeGenerator : public ModuleObject {
+class CMakeGenerator : public ProcessClass<std::string> {
     EState* env;
     std::string output;
     public:
         CMakeGenerator(EState*);
-        void compile();
-        std::string get_output();
+        virtual void run();
+        virtual std::string fetch();
         
 };
 

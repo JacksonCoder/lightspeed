@@ -21,17 +21,16 @@ class Directory {
 };
 
 
-class getSource : public ModuleObject {
+class DirectoryFetcher : public ProcessClass<Directory> {
     std::string path;
     bool is_file;
     //HTTPFetcher httpgetter;
     FileLoader filegetter;
     Directory src;
     public:
-        getSource(std::string);
-        ~getSource();
-        void get();
-        Directory results();
+        DirectoryFetcher(std::string);
+        virtual void run();
+        virtual Directory fetch();
 };
 
 #endif

@@ -22,7 +22,8 @@ class StatusClass {
     // This class doesn't have too much stuff built in
     bool is_stable;
 public:
-    virtual void stability_update() = 0;
+    virtual void stability_update();
+    bool stable();
 };
 
 template <typename T>

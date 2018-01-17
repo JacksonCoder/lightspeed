@@ -8,9 +8,8 @@
 #include <iostream>
 #include <unistd.h>
 
-class FileLoader {
-public:
-    static File* load (std::string,bool);
+namespace FileLoader {
+    File* load (std::string,bool);
 };
 
 #endif

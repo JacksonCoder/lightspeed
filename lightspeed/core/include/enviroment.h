@@ -22,7 +22,7 @@ Tips:
 Also, you might be wondering what a process object is. It's a class that runs some sort of function involved in a LS command sequence. It will set a flag saying it failed and return early if something goes wrong. It can also throw errors for which the parent process can catch and release. Usually, errors are preferred over has_failed flags.
 */
 
-class EState {
+class EState : StatusClass {
     // enviromental / command line variables
     string option;
     string conf_access;
@@ -38,10 +38,6 @@ class EState {
     public:
         EState(); //Please use for testing only, if you don't want nasty segmentation faults in production.
         EState(InputHandleOutput);
-        
-        void setup();
-        
-        bool stability_check();
         
         std::tuple<vector<string> > get_state();
         
