@@ -2,7 +2,7 @@
 
 void OptionSwitch::dispatch(EState* env)
 {
-    std::tuple<std::vector<std::string> > > local_conf = env->get_state();
+    std::tuple<std::vector<std::string> > local_conf = env->get_state();
     std::string option = env->get_option();
     if ( option == "help" || option == "version") {
         help();
@@ -66,7 +66,7 @@ void OptionSwitch::dispatch(EState* env)
             h.run();
             std::cout << std::endl << "Result:" << std::endl;
             if (h.did_fail()) std::cout << "There was an error trying to connect" << std::endl;
-            h.getResult().print();
+            h.fetch().print();
             return;
         }
         if(SANDBOX_OPTIONS[c] == "parsing") {

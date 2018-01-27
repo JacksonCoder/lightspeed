@@ -1,15 +1,8 @@
 #include "../../include/file.h"
 
-File::File(std::string fname) {
+File::File(std::string fname, bool open) {
     filename = fname;
-}
-
-bool File::open() {
-    return is_open;
-}
-
-void File::set_open(bool v) {
-        is_open = v;
+    is_stable = open;
 }
 
 void File::append_contents(std::string s) {

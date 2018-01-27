@@ -28,6 +28,7 @@ class DirectoryFetcher : public ProcessClass<Directory> {
     Directory src;
     public:
         DirectoryFetcher(std::string);
+        ~DirectoryFetcher();
         virtual void run();
         virtual Directory fetch();
 };

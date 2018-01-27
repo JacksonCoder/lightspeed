@@ -12,8 +12,7 @@ using json = nlohmann::json;
 
 class LightSpeedConfigurationParser : public ProcessClass<std::vector<std::string> > {
     json object;
-    std::vector<std::string> repos;
-    
+    File* file_ptr;
 public:
     LightSpeedConfigurationParser(File*);
     
@@ -30,6 +29,7 @@ struct ProjectFileData {
     std::vector<std::string> build_includes;
     bool link_cmake_deps;
     ProjectFileData(std::string,std::string,std::string,std::string,std::vector<json>,std::vector<std::string>,bool);
+    ProjectFileData();
 };
 
 class ProjectFileParser : public ProcessClass<ProjectFileData> {

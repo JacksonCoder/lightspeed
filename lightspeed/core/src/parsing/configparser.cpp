@@ -3,16 +3,22 @@
 #include <time.h>
 #include "../../include/errormanager.h"
 
-ConfigParser::ConfigParser(File* f) {
-        set_fail(true);
+LightSpeedConfigurationParser::LightSpeedConfigurationParser(File* f) {
+        file_ptr = f;
+}
+    
+
+void LightSpeedConfigurationParser::run()
+{
+        has_failed = true;
         // Get contents of file
-        std::string filecontents = f->getContents();
+        std::string filecontents = file_ptr->getContents();
         auto c = std::clock();
         try {
             object = json::parse(filecontents);
         }
         catch(...) {
-            error = "An exception was thrown during parsing of JSON data";
+            error_msg = "An exception was thrown during parsing of JSON data";
             return;
         }
         try {
@@ -26,29 +32,26 @@ ConfigParser::ConfigParser(File* f) {
         auto time_elapsed = double(std::clock() - c);
         json repo_list = object["repos"];
         for (auto r : repo_list) {
-            repos.push_back(r);
+            result.push_back(r);
         }
         double sec = time_elapsed / CLOCKS_PER_SEC;
         std::cout.precision(10);
         std::cout << "Configuration file loaded in " << sec<< " seconds"<< std::endl;
-        set_fail(false);
-    }
-    
-
-bool ConfigParser::success() {
-        return !did_fail();
-    }
-    
-std::string ConfigParser::error_msg() {
-        return error;
-    }
-    
-std::vector<std::string> ConfigParser::get_repos() {
-    return repos;
+        has_failed = false;
 }
 
+std::vector<std::string> LightSpeedConfigurationParser::fetch()
+{
+    return result;
+}
+
+
 ProjectFileParser::ProjectFileParser(File* f) {
-        set_fail(false);
+        std::string name,version,owner,build_type;
+        std::vector<json> dependencies;
+        std::vector<std::string> build_includes;
+        bool link_cmake_deps;
+        json object;
         auto c = std::clock();
         std::string contents = f->getContents();
         try {
@@ -56,7 +59,7 @@ ProjectFileParser::ProjectFileParser(File* f) {
         }
         catch(...) {
             error_msg = "An exception was thrown during parsing of the JSON data";
-            set_fail(true);
+            has_failed = true;
             return;
         }
         try {
@@ -67,7 +70,7 @@ ProjectFileParser::ProjectFileParser(File* f) {
         }
         catch (std::exception& e) {
             error_msg = "There was an error parsing your package definition file. Check the file for typos";
-            set_fail(true);
+            has_failed = true;
             return;
         }
         //Parse manifest
@@ -79,13 +82,13 @@ ProjectFileParser::ProjectFileParser(File* f) {
         json deproot = object["dependencies"];
         if (!deproot.is_array()) {
             error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
-            set_fail(true);
+            has_failed = true;
             return;
         }
         for (auto d : deproot) {
             if (!d.is_object() || !d["name"].is_string() || !d["version"].is_string()) {
                 error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
-                set_fail(true);
+                has_failed = true;
                 return;
             }
         }
@@ -97,7 +100,7 @@ ProjectFileParser::ProjectFileParser(File* f) {
         json build = object["build"];
         if(!build.is_object()) {
             error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
-            set_fail(true);
+            has_failed = true;
             return;
         }
         json create_cmake_link = build["cmake-create-dep-file"];
@@ -105,44 +108,35 @@ ProjectFileParser::ProjectFileParser(File* f) {
         json include = build["include"];
         if(!create_cmake_link.is_boolean() || !type.is_string() || !include.is_array()) {
             error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
-            set_fail(true);
+            has_failed = true;
             return;
         }
         link_cmake_deps = create_cmake_link;
-        b_type = type;
+        build_type = type;
         for(auto i : include) {
             if(!i.is_string()) {
                 error_msg = "There was an error parsing the dependencies for your project. Make sure they are formatted correctly";
-                set_fail(true);
+                has_failed = true;
                 return;
             }
-            b_include.push_back(i);
+            build_includes.push_back(i);
         }
-        double diff = std::clock() - c;
-        double sec = diff / CLOCKS_PER_SEC;
-        std::cout.precision(10);
-        std::cout << "Parsed package file in " << sec << " seconds" << std::endl;
-}
-    
-std::string ProjectFileParser::get_error() {
-    return error_msg;
+        
+        result = ProjectFileData(
+                name, version, owner, build_type,
+                dependencies,
+                build_includes,
+                link_cmake_deps
+                 );
 }
 
-std::vector<json> ProjectFileParser::get_dependencies()
+ProjectFileData::ProjectFileData(std::string name, std::string version, std::string owner, std::string build_type, std::vector<json> dependencies, std::vector<std::string> build_includes, bool link_cmake_deps)
 {
-    return dependencies;
+    this->name = name;
+    this->version = version;
+    this->build_type = build_type;
+    this->dependencies = dependencies;
+    this->build_includes = build_includes;
+    this->link_cmake_deps = link_cmake_deps;
 }
 
-std::vector<std::string> ProjectFileParser::get_include()
-{
-    return b_include;
-}
-
-bool ProjectFileParser::make_cmake_link() {
-    return link_cmake_deps;
-}
-
-std::string ProjectFileParser::type()
-{
-    return b_type;
-}

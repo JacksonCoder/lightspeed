@@ -4,20 +4,20 @@ File* FileLoader::load(std::string fname, bool cwd)  {
     if(cwd) {
         fname = get_current_dir_name() + std::string("/") + fname;
     }
-    File* f = new File(fname);
+    File* f = new File(fname,true);
     std::ifstream f_read(fname);
     try {
         if(!f_read) {
-            f->set_open(false);
+            f->set_stable(false);
             return f;
         }
     }
     catch(...) {
-        f->set_open(false);
+        f->set_stable(false);
         return f;
     }
     if (!f_read.is_open()) {
-        f->set_open(false);
+        f->set_stable(false);
         return f;
     }
     std::string buffer;
@@ -26,7 +26,7 @@ File* FileLoader::load(std::string fname, bool cwd)  {
         std::getline(f_read,buffer);
         f->append_contents(buffer);
     }
-    f->set_open(true);
+    f->set_stable(true);
     f_read.close();
     return f;
 }

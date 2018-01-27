@@ -4,7 +4,7 @@ CMakeGenerator::CMakeGenerator(EState* env) {
     this->env = env;
 }
 
-void CMakeGenerator::compile()
+void CMakeGenerator::run()
 {
     //Get all linked libraries
     //env->validate_all_deps_built(); //TODO: Handle in get_linked_library_paths
@@ -29,12 +29,9 @@ void CMakeGenerator::compile()
         result += "${CMAKE_CURRENT_SOURCE_DIR}/" + l + " ";
     }
     result += ")\n";
-    
-    
-    this->output = result;
 }
 
-std::string CMakeGenerator::get_output()
+std::string CMakeGenerator::fetch()
 {
-    return output;
+    return result;
 }

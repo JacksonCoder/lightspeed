@@ -43,40 +43,36 @@ void Directory::release() {
 }
 
 
-getSource::getSource(std::string path) { //Note: path always a slash after it
+DirectoryFetcher::DirectoryFetcher(std::string) { //Note: path always a slash after it
     this->path = path;
     auto r = std::regex_search(path,std::regex("^http"));
     is_file = !r;
 }
 
-getSource::~getSource() {
+DirectoryFetcher::~DirectoryFetcher() {
     src.release();
 }
 
-void getSource::get() {
+void DirectoryFetcher::run() {
     if (!is_file) {
-        HTTPConnection http(path);
+        HTTPFetcher http(path,true);
         std::cout << "Fetching package from URL: " + path << std::endl;
-        http.fetch(true,"");
-        src = http.getResult();
+        http.run();
+        src = http.fetch();
         return;
     }
     // It's a local directory: start reading from it
     
     //Attempt to read package file first (to make sure it's a package):
-    File* package_file = filegetter.load(path + "LightSpeed.json",true);
-    if(!package_file->open()) {
+    File* package_file = FileLoader::load(path + "LightSpeed.json",true);
+    if(!package_file->stable()) {
         std::cout << "The specified package path does not contain a package descriptor file 'LightSpeed.json' in it: invalid package" << std::endl;
-        set_fail(true);
+        has_failed = true;
         return;
     }
-    auto t = std::clock();
     src = getDirectory(path);
-    double elapsed = std::clock() - t;
-    elapsed /= CLOCKS_PER_SEC;
-    std::cout << "Package contents loaded in " << elapsed << " seconds" << std::endl;
 }
 
-Directory getSource::results() {
+Directory DirectoryFetcher::fetch() {
     return src;
 }

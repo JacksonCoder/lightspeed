@@ -22,11 +22,13 @@ public:
 };
 
 class StatusClass {
+protected:
     // This class doesn't have too much stuff built in
     bool is_stable;
 public:
     virtual void stability_update();
-    bool stable();
+    bool stable(); 
+    void set_stable(bool) { is_stable = true; }
 };
 
 template <typename T>
