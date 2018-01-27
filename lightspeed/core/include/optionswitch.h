@@ -11,9 +11,6 @@
 #include "codegrab.h"
 
 class OptionSwitch : public DispatcherClass<EState*> {
-    std::tuple<std::vector<std::string> > local_conf;
-    std::string option;
-    EState* env;
     public:
     virtual void dispatch(EState*);
     

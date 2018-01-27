@@ -7,17 +7,16 @@
 int main (int argc,char** argv) {
     // Create an input handle and prebuild the outcome
     InputHandle* inputhandler = new InputHandle(argc,argv);
-    inputhandler->build();
+    inputhandler->run();
     ErrorManager::release();
+
     
-    // Load in the enviroment and verify it's integrity
-    std::cout << "Loading the local enviroment." << std::endl;
-    EState* estate = new EState(inputhandler->out());
-    estate->setup();
+    EState* estate = new EState(inputhandler->fetch());
+    estate->stability_update();
     ErrorManager::release();
     //Send to switch
-    OptionSwitch* o = new OptionSwitch(estate);
-    o->run_switch(); // Main entry point for package manager
+    OptionSwitch* o = new OptionSwitch();
+    o->dispatch(estate); // Main entry point for package manager
     ErrorManager::release();
     //estate.clean();
     delete estate;

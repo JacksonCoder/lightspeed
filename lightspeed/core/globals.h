@@ -10,12 +10,15 @@ extern std::map<char,std::string> SANDBOX_OPTIONS;
 
 template <typename T>
 class ProcessClass {
+protected:
     bool has_failed;
+    std::string error_msg;
     T result;
 public:
     bool did_fail();
     virtual void run() = 0;
     virtual T fetch();
+    std::string get_error();
 };
 
 class StatusClass {

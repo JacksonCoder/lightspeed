@@ -5,7 +5,7 @@
 #include <string>
 #include "../globals.h"
 
-class File : StatusClass {
+class File : public StatusClass {
     std::string filename;
     std::string contents;
 public:

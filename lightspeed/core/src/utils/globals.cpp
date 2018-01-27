@@ -24,15 +24,16 @@ std::map<char,std::string> SANDBOX_OPTIONS = {
     {'p',"parsing"}
 };
 
-ModuleObject::ModuleObject() {
-    has_failed = false;
-}
-
-bool ModuleObject::did_fail() {
+template <typename T>
+bool ProcessClass<T>::did_fail() {
     return has_failed;
 }
+template <typename T>
+std::string ProcessClass<T>::get_error() {
+    return error_msg;
+}
 
-void ModuleObject::set_fail(bool val)
+bool StatusClass::stable()
 {
-    has_failed = val;
+    return is_stable;
 }

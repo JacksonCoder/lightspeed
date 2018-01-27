@@ -13,8 +13,8 @@ class HTTPFetcher : public ProcessClass<Directory> {
     bool use_loading_bar;
 public:
     HTTPFetcher(std::string,bool);
-    virtual void fetch(bool,std::string); //first arg is show loading bar
-    Directory getResult() { return download_res; }
+    virtual void run();
+    virtual Directory fetch();
 };
 
 size_t set_write_data(void*,size_t,size_t,std::string*);

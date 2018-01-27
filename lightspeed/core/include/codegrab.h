@@ -25,7 +25,6 @@ class DirectoryFetcher : public ProcessClass<Directory> {
     std::string path;
     bool is_file;
     //HTTPFetcher httpgetter;
-    FileLoader filegetter;
     Directory src;
     public:
         DirectoryFetcher(std::string);

@@ -17,22 +17,15 @@ EState::EState(InputHandleOutput i) {
     else {
         option = DEFAULT_ACTION;
     }
-}
-
-EState::EState() {
-    // Empty constructor for testing purposes only. DO NOT USE THIS CODE IN PRODUCTION.
-}
-
-void EState::setup() {
     // Make sure configuration file (containing repos) exists
     
     File* file = FileLoader::load(conf_access,true);
-    if (!file->open()) {
+    if (!file->stable()) {
         ErrorManager::error("Could not access local configuration file: '" + conf_access + "'. Please check that the file exists or you are in the proper directory","enviroment",true);
     }
-    ConfigParser c = ConfigParser(file);
+    LightSpeedConfigurationParser c = LightSpeedConfigurationParser(file);
     ErrorManager::release();
-    s_repos = c.get_repos();
+    s_repos = c.fetch();
     
     // Test arguments
     bool option_valid = false;
@@ -45,10 +38,10 @@ void EState::setup() {
     }
 }
 
-bool EState::stability_check()
- {
-     return true;
+EState::EState() {
+    // Empty constructor for testing purposes only. DO NOT USE THIS CODE IN PRODUCTION.
 }
+
 
 std::tuple<std::vector< std::string > > EState::get_state()
 {

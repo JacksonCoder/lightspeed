@@ -1,25 +1,21 @@
 #include "../../include/optionswitch.h"
 
-OptionSwitch::OptionSwitch(EState* env) {
-        local_conf = env->get_state();
-        option = env->get_option();
-        this->env = env;
-}
-
-void OptionSwitch::run_switch()
+void OptionSwitch::dispatch(EState* env)
 {
+    std::tuple<std::vector<std::string> > > local_conf = env->get_state();
+    std::string option = env->get_option();
     if ( option == "help" || option == "version") {
         help();
         return;
     }
     if (option == "status") {
         std::cout << "Checking state of current project..." << std::endl;
-        try {
-            env->stability_check();
-        } catch(std::exception&) {
-            std::cout << "Global config file is not stable" << std::endl;
+        env->stability_update();
+        if(env->stable()) {
+            std::cout << "Global configuration file is stable." << std::endl;
+        } else {
+            std::cout << "Global configuration file is not stable." << std::endl;
         }
-        std::cout << "Global config file is stable." << std::endl;
         return;
     }
     if (option == "sandbox") {
@@ -46,8 +42,8 @@ void OptionSwitch::run_switch()
             env->set_config_state(v,libraries,{});
             std::cout<<"Generating CMake linkage file..." << std::endl;
             auto compiler = CMakeGenerator(env);
-            compiler.compile();
-            std::cout << "Done.\nResult:\n" << compiler.get_output();
+            compiler.run();
+            std::cout << "Done.\nResult:\n" << compiler.fetch();
             return;
         }
         if(SANDBOX_OPTIONS[c] == "utils") {
@@ -55,8 +51,9 @@ void OptionSwitch::run_switch()
             std::cout<< "Enter directory (file or HTTP):";
             std::string file;
             std::cin >> file;
-            getSource source_grabber(file);
-            source_grabber.get();
+            DirectoryFetcher source_grabber(file);
+            source_grabber.run();
+            source_grabber.fetch().print();
             return;
         }
         if(SANDBOX_OPTIONS[c] == "network") {
@@ -64,9 +61,9 @@ void OptionSwitch::run_switch()
             std::string path;
             std::cout << "Enter URL:";
             std::cin >> path;
-            HTTPConnection h(path);
+            HTTPFetcher h(path,true);
             std::cout << "Directory output:" << std::endl;
-            h.fetch(true,"");
+            h.run();
             std::cout << std::endl << "Result:" << std::endl;
             if (h.did_fail()) std::cout << "There was an error trying to connect" << std::endl;
             h.getResult().print();
@@ -78,21 +75,20 @@ void OptionSwitch::run_switch()
             std::string loc;std::cin>>loc;
             ProjectFileParser parser = ProjectFileParser(FileLoader::load(loc,true));
             if(parser.did_fail()) {
-                std::cout << "--- ERROR ---" << std::endl;
-                std::cout << parser.get_error() << std::endl;
-                return;
+                ErrorManager::error(parser.get_error(),"parsing",false);
             }
             std::cout << "File parsed successfully. Details:" << std::endl;
             
             std::cout << "List of dependencies:\n";
-            for(auto j : parser.get_dependencies()) {
+            ProjectFileData pfd = parser.fetch();
+            for(auto j : pfd.dependencies) {
                 std::cout << j << std::endl;
             }
             std::cout << "Build information:\n";
-            std::cout << "Should generate CMake linkage file: " << parser.make_cmake_link() << std::endl;
-            std::cout << "Build system: " << parser.type() << std::endl;
+            std::cout << "Should generate CMake linkage file: " << pfd.link_cmake_deps << std::endl;
+            std::cout << "Build system: " << pfd.build_type << std::endl;
             std::cout << "Directories/files to include:" << std::endl;
-            for(auto i : parser.get_include()) {
+            for(auto i : pfd.build_includes) {
                 std::cout << i << std::endl;
             }
             return;

@@ -13,15 +13,16 @@ class InputHandleOutput : StatusClass {
     std::vector<std::string> reg_args;
     std::string option;
     public:
-        InputHandleOutput(std::map<std::string,std::string> args);
+        InputHandleOutput();
+        void construct(std::map<std::string,std::string> args);
         std::map<std::string,std::string> get_args();
         std::vector<std::string> get_reg_args();
         std::string get_option();
 };
-class InputHandle : public ProcessClass<InputHandleOutput> {
+class InputHandle : protected  ProcessClass<InputHandleOutput> {
     std::map<std::string,std::string> buildargs;
 public:
-    InputHandle(int,char**);
+    InputHandle(int argc, char** argv);
     
     virtual void run();
     virtual InputHandleOutput fetch();

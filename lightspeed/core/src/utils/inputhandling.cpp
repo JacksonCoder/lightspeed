@@ -1,6 +1,6 @@
 #include "../../include/inputhandling.h"
 
-InputHandleOutput::InputHandleOutput(std::map<std::string,std::string> args) {
+void InputHandleOutput::construct(std::map<std::string,std::string> args) {
             
             for(auto a : args) {
                 if(a.second == "__empty!") {
@@ -24,13 +24,15 @@ std::string InputHandleOutput::get_option() {
     return "";
 }
 
-InputHandle::InputHandle(int argc, char** argv) {
+
+InputHandle::InputHandle(int argc, char** argv) : ProcessClass<InputHandleOutput>() {
     // Refactor this code
     
     // Verify some things
     
+    
     if (argc<1) {
-        set_fail(true);
+        has_failed = true;
         ErrorManager::error("There were no command line arguments passed to the program.","input handling",false);
         return;
     }
@@ -54,10 +56,11 @@ InputHandle::InputHandle(int argc, char** argv) {
     }
 }
 
-InputHandleOutput InputHandle::out() {
-    return InputHandleOutput(buildargs);
+void InputHandle::run()
+{
 }
 
-void InputHandle::build() {
-    
+InputHandleOutput InputHandle::fetch()
+{
 }
+
