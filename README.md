@@ -10,17 +10,9 @@ LightSpeed also will feature the LightWeight build system, a system that cuts do
 
 ## Commands
 
-```lightspeed version```: Prints the version
+`lightspeed sandbox`: Run the sandbox mode for LightSpeed, testing beta features. 
 
-```lightspeed status```: Prints the current status of the package
-
-```lightspeed create <project name>```: Helper command for creating a package
-
-```lightspeed search <package name>```: Searches for a package with a certain name
-
-```lightspeed build```: Installs all dependencies and (depending on project settings) creates a CMake file for linking dependencies
-
-```lightspeed repo <add/remove/exists> <repository name>```: Commands to add, remove and check potential code repositories
+`lightspeed version`: Display the version of LightSpeed.
 
 
 ## More information
@@ -29,9 +21,10 @@ Documentation is coming soon regarding the creation of LightSpeed packages. The 
 
 ## Release scheduling
 
-0.1 is scheduled to be released within the next 2 weeks. The application will just be a sandbox for testing out various components of the project. This includes project file parsing, installation, and compilation into CMake files, as well as various utilities.
+0.1 has just been released! This release includes the ability to test all the components that will eventually make up the LightSpeed toolchain.
 
-0.2 will fix bugs in 0.1, and greatly expand documentation of LightSpeed. A lot of code cleanup will also be part of it. Set to be released in early January.
+0.2 will fix bugs in 0.1, and greatly expand documentation of LightSpeed. It will also move all the beta features into their respective commands, so rudimentary package building will be possible. Set to be
+released at the end of February.
 
 0.3 will fix bugs from 0.2 and expand LightSpeed's command list/functionality. Release time TBD.
 
