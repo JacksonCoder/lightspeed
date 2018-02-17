@@ -54,6 +54,8 @@ InputHandle::InputHandle(int argc, char** argv) : ProcessClass<InputHandleOutput
             buildargs[args[arg_i]] = "__empty!";
         }
     }
+    result.construct(buildargs);
+    std::cout << "REACHED" << std::endl;
 }
 
 InputHandleOutput::InputHandleOutput()
@@ -68,5 +70,6 @@ void InputHandle::run()
 
 InputHandleOutput InputHandle::fetch()
 {
+    return result;
 }
 

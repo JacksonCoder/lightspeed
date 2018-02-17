@@ -33,3 +33,7 @@ void StatusClass::stability_update()
     
 }
 
+void StatusClass::set_stable(bool v)
+{
+    is_stable = v;
+}

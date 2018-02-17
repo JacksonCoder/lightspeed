@@ -28,7 +28,7 @@ protected:
 public:
     virtual void stability_update();
     bool stable(); 
-    void set_stable(bool) { is_stable = true; }
+    void set_stable(bool);
 };
 
 template <typename T>

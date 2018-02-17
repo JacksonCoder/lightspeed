@@ -8,6 +8,7 @@ File* FileLoader::load(std::string fname, bool cwd)  {
     std::ifstream f_read(fname);
     try {
         if(!f_read) {
+            std::cout << 'h' << std::endl;
             f->set_stable(false);
             return f;
         }

@@ -17,7 +17,6 @@ TEST(Utils,FailsOnNonexistentFile) {
     File* f2 = FileLoader::load("another_file_that_doesnt_exist.txt",false);
     ASSERT_TRUE(!f->stable());
     ASSERT_TRUE(!f2->stable());
-    
 }
 
 TEST(Utils,FailsOnNoLightSpeedJSON) {
