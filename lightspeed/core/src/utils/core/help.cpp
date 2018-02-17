@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../../include/help.h"
+#include "../../../include/help.h"
 
 void help () {
     std::cout << "LightSpeed v" + LS_VERSION << std::endl;

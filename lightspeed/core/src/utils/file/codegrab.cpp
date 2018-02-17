@@ -1,5 +1,5 @@
-#include "../../include/codegrab.h"
-#include "../../include/network.h"
+#include "../../../include/codegrab.h"
+#include "../../../include/network.h"
 
 Directory getDirectory(std::string path) {
     Directory src;
@@ -43,7 +43,7 @@ void Directory::release() {
 }
 
 
-DirectoryFetcher::DirectoryFetcher(std::string) { //Note: path always a slash after it
+DirectoryFetcher::DirectoryFetcher(std::string path) { //Note: path always a slash after it
     this->path = path;
     auto r = std::regex_search(path,std::regex("^http"));
     is_file = !r;

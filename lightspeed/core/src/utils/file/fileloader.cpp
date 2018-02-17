@@ -1,4 +1,4 @@
-#include "../../include/fileloader.h"
+#include "../../../include/fileloader.h"
 
 File* FileLoader::load(std::string fname, bool cwd)  {
     if(cwd) {

@@ -1,4 +1,4 @@
-#include "../../include/optionswitch.h"
+#include "../../../include/optionswitch.h"
 
 void OptionSwitch::dispatch(EState* env)
 {
