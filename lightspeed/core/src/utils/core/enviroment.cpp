@@ -21,7 +21,7 @@ EState::EState(InputHandleOutput i) {
     
     File* file = FileLoader::load(conf_access,true);
     if (!file->stable()) {
-        ErrorManager::error("Could not access local configuration file: '" + conf_access + "'. Please check that the file exists or you are in the proper directory","enviroment",true);
+        ErrorManager::error("Could not access local configuration file: '" + conf_access + "'. Please check that the file exists or you are in the proper directory","enviroment",false);
     }
     LightSpeedConfigurationParser c = LightSpeedConfigurationParser(file);
     ErrorManager::release();
