@@ -2,16 +2,17 @@
 
 bool network_success;
 
-HTTPConnection::HTTPConnection(std::string path) {
+HTTPFetcher::HTTPFetcher(std::string path, bool loading_bar) {
     url = path;
+    use_loading_bar = loading_bar;
 }
 
-HTTPConnection::~HTTPConnection()
+HTTPFetcher::~HTTPFetcher()
 {
-    download_res.release();
+    result.release();
 }
 
-void HTTPConnection::fetch(bool use_loading_bar,std::string dest)
+void HTTPFetcher::run()
 {    
     // Run scan of files to download
 
@@ -20,15 +21,21 @@ void HTTPConnection::fetch(bool use_loading_bar,std::string dest)
     std::string file = fetch_file(this->url,use_loading_bar);
     
     if(!network_success) {
-        set_fail(true);
+        has_failed = true;
         return;
     }
     else {
-        set_fail(false);
+        has_failed = false;
     }
     
-    File* f = new File("download_result");
+    File* f = new File("result",true);
     f->append_contents(file);
-    download_res.appendFile(f);
+    result.appendFile(f);
 }
+
+Directory HTTPFetcher::fetch()
+{
+    return result;
+}
+
 

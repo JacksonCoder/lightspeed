@@ -13,6 +13,7 @@ class HTTPFetcher : public ProcessClass<Directory> {
     bool use_loading_bar;
 public:
     HTTPFetcher(std::string,bool);
+    ~HTTPFetcher();
     virtual void run();
     virtual Directory fetch();
 };

@@ -130,6 +130,18 @@ ProjectFileParser::ProjectFileParser(File* f) {
                  );
 }
 
+void ProjectFileParser::run()
+{
+    
+}
+
+ProjectFileData ProjectFileParser::fetch()
+{
+    return result;
+}
+
+
+
 ProjectFileData::ProjectFileData(std::string name, std::string version, std::string owner, std::string build_type, std::vector<json> dependencies, std::vector<std::string> build_includes, bool link_cmake_deps)
 {
     this->name = name;
@@ -138,5 +150,10 @@ ProjectFileData::ProjectFileData(std::string name, std::string version, std::str
     this->dependencies = dependencies;
     this->build_includes = build_includes;
     this->link_cmake_deps = link_cmake_deps;
+}
+
+ProjectFileData::ProjectFileData()
+{
+    
 }
 

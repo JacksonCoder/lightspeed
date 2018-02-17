@@ -19,7 +19,7 @@ class InputHandleOutput : StatusClass {
         std::vector<std::string> get_reg_args();
         std::string get_option();
 };
-class InputHandle : protected  ProcessClass<InputHandleOutput> {
+class InputHandle : public  ProcessClass<InputHandleOutput> {
     std::map<std::string,std::string> buildargs;
 public:
     InputHandle(int argc, char** argv);

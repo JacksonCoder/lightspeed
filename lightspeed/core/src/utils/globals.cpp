@@ -23,17 +23,13 @@ std::map<char,std::string> SANDBOX_OPTIONS = {
     {'n',"network"},
     {'p',"parsing"}
 };
-
-template <typename T>
-bool ProcessClass<T>::did_fail() {
-    return has_failed;
-}
-template <typename T>
-std::string ProcessClass<T>::get_error() {
-    return error_msg;
-}
-
 bool StatusClass::stable()
 {
     return is_stable;
 }
+
+void StatusClass::stability_update()
+{
+    
+}
+

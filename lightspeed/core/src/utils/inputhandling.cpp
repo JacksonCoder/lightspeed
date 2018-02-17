@@ -56,6 +56,12 @@ InputHandle::InputHandle(int argc, char** argv) : ProcessClass<InputHandleOutput
     }
 }
 
+InputHandleOutput::InputHandleOutput()
+{
+    
+}
+
+
 void InputHandle::run()
 {
 }

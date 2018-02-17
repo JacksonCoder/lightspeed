@@ -15,8 +15,8 @@ TEST(Utils,InputHandlerFailsOnNoArguments) {
 TEST(Utils,FailsOnNonexistentFile) {
     File* f = FileLoader::load("some_file_that_doesnt_exist.txt",true);
     File* f2 = FileLoader::load("another_file_that_doesnt_exist.txt",false);
-    ASSERT_TRUE(!f->open());
-    ASSERT_TRUE(!f2->open());
+    ASSERT_TRUE(!f->stable());
+    ASSERT_TRUE(!f2->stable());
     
 }
 
@@ -33,13 +33,13 @@ TEST(Compilation,CanBuildFileCorrectly) {
     EState* env = new EState();
     CMakeGenerator* cmakeg = new CMakeGenerator(env);
     env->set_config_state("2.6",{},{});
-    cmakeg->compile();
-    std::string result = cmakeg->get_output();
+    cmakeg->run();
+    std::string result = cmakeg->fetch();
     ASSERT_TRUE(std::regex_search(result,std::regex("cmake_minimum_required")));
     std::string examplelibrarypath = "some/random/library/path";
     env->set_config_state("2.6",{examplelibrarypath},{});
-    cmakeg->compile();
-    result = cmakeg->get_output();
+    cmakeg->run();
+    result = cmakeg->fetch();
     ASSERT_TRUE(std::regex_search(result,std::regex("set")));
     ASSERT_TRUE(std::regex_search(result,std::regex(examplelibrarypath)));
     ASSERT_TRUE(std::regex_search(result,std::regex("cmake_minimum_required")));
@@ -55,8 +55,8 @@ TEST(Compilation,FailsOnNullInput) {
     CMakeGenerator* cmakeg = new CMakeGenerator(env);
     //Don't run set_config_state
     
-    cmakeg->compile();
-    //ASSERT_TRUE(cmakeg->has_failed()); //Do this after inheritance is added.
+    cmakeg->run();
+    ASSERT_TRUE(cmakeg->did_fail());
 }
 
 //
@@ -64,8 +64,8 @@ TEST(Compilation,FailsOnNullInput) {
 //
 
 TEST(Network,IsConnectedToInternet) {
-    HTTPConnection h = HTTPConnection("http://google.com");
-    h.fetch(false,"");
+    HTTPFetcher h = HTTPFetcher("http://google.com",false);
+    h.run();
     EXPECT_TRUE(!h.did_fail()) << "You are not connected to the internet, which means network tests will FAIL.";
 
 }
