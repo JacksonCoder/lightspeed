@@ -18,6 +18,15 @@ void OptionSwitch::dispatch(EState* env)
         }
         return;
     }
+    if (option == "build") {
+        return;
+    }
+    if (option == "init") {
+        return;
+    }
+    if (option == "clean") {
+        return;
+    }
     if (option == "sandbox") {
         std::cout << "Welcome to the LightSpeed beta sandbox! Test potential features here!" << std::endl;
         for(auto s : SANDBOX_OPTIONS) {
