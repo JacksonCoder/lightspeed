@@ -3,7 +3,7 @@
 
 # Install JSON for C++ in external
 git clone https://github.com/nlohmann/json lightspeed/core/external/json
-mv lightspeed/core/external/json/src/json.hpp lightspeed/core/external/json.hpp
+mv lightspeed/core/external/json/single_include/nlohmann/json.hpp lightspeed/core/external/json.hpp
 rm -rf lightspeed/core/external/json
 
 # Install GoogleTest
